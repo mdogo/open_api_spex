@@ -1,4 +1,4 @@
-# 3.6.0
+# 3.6.1
 
 Thanks to the contributions of the community ❤️💙💛💜🧡
 

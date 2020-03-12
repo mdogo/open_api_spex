@@ -71,6 +71,18 @@ defmodule OpenApiSpex.Cast.String do
   end
 
   defp apply_validation(%{value: value, schema: %{pattern: pattern}} = ctx, [:pattern | fields])
+    when is_binary(pattern) do
+    pattern = Regex.compile!(pattern)
+    if Regex.match?(pattern, value) do
+      apply_validation(ctx, fields)
+    else
+      ctx
+      |> apply_error({:invalid_format, pattern})
+      |> apply_validation(fields)
+    end
+  end
+
+  defp apply_validation(%{value: value, schema: %{pattern: pattern}} = ctx, [:pattern | fields])
        when not is_nil(pattern) do
     if Regex.match?(pattern, value) do
       apply_validation(ctx, fields)
